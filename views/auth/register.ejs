@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/auth/register.js" defer></script>
+</head>
+<body>
+    <main id="center">
+        <form>
+            <h1>Register</h1>
+            <h2>Email</h2>
+            <input type="text" name="email" id="email" placeholder="Your email...">
+            <h2>Password</h2>
+            <input type="password" name="password" id="password" placeholder="Your password...">
+            <h2>Confirm password</h2>
+            <input type="password" name="confirm" id="confirm" placeholder="Confirm your password..."><br>
+            <input type="checkbox" onchange="show(this)" id="checkbox" style="margin-top: 10px;">
+            <label for="checkbox">Show passwords</label><br>
+            <button style="margin-top: 20px;">Register</button>
+            <h3 id="error"></h3>
+        </form>
+    </main>
+</body>
+</html>
