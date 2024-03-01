@@ -1,42 +1,38 @@
-const HOST = 'localhost'
-const PORT = 8000
 const express = require('express')
 const app = express()
-const { Client } = require('pg')
 
-const db = new Client({
-    user: 'katka',
-    host: 'localhost',
-    database: 'notes',
-    password: '2011',
-    port: 5432
-})
-db.connect()
-const usersQuery = 'CREATE TABLE IF NOT EXISTS users (email varchar, password varchar)'
-db.query(usersQuery, (err, res) => {
-    if (err) throw new Error(err)
-})
+const sqlite = require('sqlite3')
+const db = new sqlite.Database("db.sqlite3")
+db.exec('create table if not exists users (email text, password text)')
 
-app.use('/static', express.static(__dirname + '/static'))
 app.set('view engine', 'ejs')
+app.use('/static', express.static('static'))
+const parser = express.urlencoded({extended: false});
 
-app.get('/auth/login', (req, res) => {
-    res.render('auth/register')
+app.get('/register', (req, res) => {
+    const err = req.query.err
+    res.render('auth/register', {err: err})
 })
 
-app.get('/api/auth/exist', (req, res) => {
-    db.query(`SELECT * FROM USERS WHERE email='${req.query.email}`, (err, res) => {
+app.post("/api/auth/register", parser, (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const repeat = req.body.repeat;
+    if (password !== repeat) {
+        res.redirect('/register?err=Passwords+don\'t+match');
+        return;
+    }
+
+    db.run(`INSERT INTO users (email, password) VALUES (?, ?)`, [email, password], function(err) {
         if (err) {
-            res.send('error')
-            return
+            console.error(err);
+            res.status(500).render('500');
+        } else {
+            res.redirect('/');
         }
-        if (res.rows) res.send('true')
-        else res.send('false')
-    })
+    });
 })
 
-app.get('/api/auth/register', (req, res) => {
-    
+app.listen(8000, () => {
+    console.log("Server started at http://localhost:8000")
 })
-
-app.listen(PORT, HOST, () => console.log(`Server listening at http://${HOST}:${PORT}`))
