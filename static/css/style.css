@@ -1,6 +1,13 @@
-button {
-    background-color: #fcbe05;
+body {
+    background-color: #1e2022;
+}
+
+* {
     color: white;
+}
+
+button {
+    background-color: #cba528;
     padding: 10px;
     font-size: large;
     border: none;
@@ -22,6 +29,20 @@ form {
 }
 
 input {
+    background-color: #27282b;
+    border: 1px #343638 solid;
     padding: 7px;
     border-radius: 7px;
+}
+
+input:focus {
+    border: 4px #989236 solid;
+    background-color: #2d2d2e;
+}
+
+::selection {
+    background-color: #8a764a
+}
+::-moz-selection {
+    background-color: #8a764a
 }

@@ -5,7 +5,6 @@ const fs = require('fs')
 
 eval(fs.readFileSync('server.cfg').toString())
 const sqlite = require('sqlite3')
-const { register } = require('module')
 const db = new sqlite.Database("db.sqlite3")
 db.exec('create table if not exists users (email text, password text)')
 
@@ -45,7 +44,7 @@ app.post("/api/auth/register", parser, async (req, res) => {
     }
     if (userExists) {
         res.redirect('/register?err=Email+already+taken');
-        return;
+        return; 
     }
     try {
         await db.run(`INSERT INTO users (email, password) VALUES (?, ?)`, [email, password]);
@@ -57,6 +56,9 @@ app.post("/api/auth/register", parser, async (req, res) => {
     }
 });
 
+app.get('/login', (req, res) => {
+    res.render('auth/login')
+})
 app.listen(port, host, () => {
     console.log(`Server started at http://${host}:${port}`)
 })

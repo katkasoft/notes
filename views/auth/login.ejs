@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        input {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <form class="center" action="/api/auth/login" method="post">
+        <h1>Login</h1>
+        <input type="email" name="email" id="email" placeholder="Enter your email" required><br>
+        <input type="password" name="password" id="password" placeholder="Enter your password" required><br>
+        <button>Login</button>
+    </form>
+</body>
+</html>
